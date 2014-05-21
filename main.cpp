@@ -2,6 +2,7 @@
 using namespace std;
 //test
 //test2
+/*
 class Node {
 private:
     Node* next;
@@ -52,4 +53,10 @@ private:
 public:
     Slot* get(int k);
     void set(Slot* v);
-};
+};*/
+
+int main(int argc, char** argv){
+
+
+	return 0;
+}
