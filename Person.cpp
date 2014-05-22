@@ -7,7 +7,7 @@ Person::Person(string name, string born, string passedAway){
 	_born = born;
 	_passedAway = passedAway;
 
-	_children = new Sibling(_siblings->getGene()+1, this);
+	_children = new Sibling(_sibling->getGene()+1, this);
 	_nextSibling = this;
 }
 

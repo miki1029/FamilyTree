@@ -53,5 +53,6 @@ void Sibling::addSibling(Person* s)
     {
         siblingOfN(_count)->addSibling(s);
     }
+    s->setSibling(this);
     _count++;
 }
