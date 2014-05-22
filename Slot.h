@@ -1,14 +1,21 @@
 #pragma once
-#include "Children.h"
+#include "Sibling.h"
 
 class Slot
 {
 private:
-	int hashing(const string);
+	int _hashSize;
+	struct _HashTable {
+		Sibling *siblings;
+		_HashTable *nextChain;
+	};
+	_HashTable *_ht, *_tail;
+
+	int _hashing(const string);
 public:
-	Slot(void);
+	Slot(int hashSize);
 	~Slot(void);
 
-	void addGeneChildren(Children* cr);
+	void addGeneChildren(Sibling* cr);
 
 };
