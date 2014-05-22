@@ -10,14 +10,15 @@ private:
 		, _born
 		, _passedAway;
 	Sibling *_children, *_siblings;
+	Person *_nextSibling;
 public:
 	Person(void);
 	~Person(void);
 
 	void addChild(Person* p);
 
-
-	inline Sibling* getChildren(){return _children;}
+	inline Person *nextSibling(){return _nextSibling;};
+	inline Sibling* getChildren(){return _children;};
 	inline void getName(string name){ _name = name; };
 	inline string setName(){return _name; };
 	inline void setBorn(string date){ _born = date; }
