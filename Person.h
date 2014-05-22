@@ -29,7 +29,7 @@ public:
 	inline void setName(string name){ _name = name; }
 	inline string getName(){return _name; }
 	inline void setBorn(string date){ _born = date; }
-	inline string getBorn(string date){ return _born; }
+	inline string getBorn(){ return _born; }
 	inline void setPassedAway(string date){ _passedAway = date; }
 	inline string getPassedAway(){ return _passedAway; }
 
