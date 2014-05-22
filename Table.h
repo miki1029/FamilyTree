@@ -4,13 +4,14 @@
 class Table
 {
 private:
-	Slot* slots;
+	Slot* _slots;
+    int _size;
+    int _lastGene;
 
 public:
 	Table(void);
 	~Table(void);
 
-	void addGene();
-	int getLastGene();
+	void addGene(Slot);
+    inline int getLastGene() { return _lastGene; }
 };
-
