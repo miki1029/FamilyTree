@@ -1,6 +1,5 @@
 #include "Generation.h"
 
-
 Generation::Generation(int hashSize=1)
 {
 	_hashSize = hashSize;
@@ -28,7 +27,7 @@ Generation::~Generation(void)
 
 int Generation::_hashing(const string s){
 	int h = 0, i=0;
-	while(i <= s.length)	h = h<<1^s[i++];
+	while(i <= s.length())	h = h<<1^s[i++];
 	return abs(h) % _hashSize;
 }
 
@@ -59,7 +58,7 @@ Sibling *Generation::get(string name){
 
 	for(itr = _ht[key].nextChain;
 		itr != _tail
-			&& itr->siblings->parent()->getName().compare(name) == 0 ;
+			&& itr->siblings->parent()->getName().compare(name) ;
 		itr = itr->nextChain);
 
 	if(itr == _tail) return NULL;

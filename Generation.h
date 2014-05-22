@@ -1,5 +1,7 @@
 #pragma once
+#include <string>
 #include "Sibling.h"
+using namespace std;
 
 class Generation
 {

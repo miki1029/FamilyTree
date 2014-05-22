@@ -1,5 +1,6 @@
 #pragma once
 #include "Person.h"
+
 class Sibling
 {
 private:
@@ -12,8 +13,8 @@ public:
     Sibling(int g, Person* p);
     ~Sibling(void);
 
-    inline Person* parent() { return _parent;  }
-    inline Person* firstSibling() { return _firstSibling; };
+    Person* parent();
+    Person* firstSibling();
 	Person* siblingOfN(int n);
     void addSibling(Person* s);
     inline int count() { return _count; }

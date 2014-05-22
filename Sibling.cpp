@@ -24,6 +24,9 @@ Sibling::~Sibling(void)
     }
 }
 
+Person *Sibling::parent(){ return _parent; }
+Person *Sibling::firstSibling(){ return _firstSibling;  }
+
 Person* Sibling::siblingOfN(int n)
 {
     if (n >= _count)
