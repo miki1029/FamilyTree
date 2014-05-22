@@ -8,6 +8,12 @@ Person::Person()
 	_nextSibling = this;
 }
 
+Person::Person(string name, string born, string passedAway){
+	_name = name;
+	_born = born;
+	_passedAway = passedAway;
+}
+
 
 Person::~Person(void)
 {
