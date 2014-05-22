@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Generation.h"
 #include "Sibling.h"
 #include "Table.h"
@@ -7,12 +8,20 @@ Table::Table(int size=50)
     // 0 인덱스는 사용하지 않음(세대 수와 인덱스를 동일하게 하기 위함)
     _size = size;
     _table = new Generation*[_size]();
+    for (int i = 0; i < _size; i++)
+    {
+        _table[i] = new Generation(i*log(i));
+    }
     _lastGene = 0;
 }
 
 
 Table::~Table(void)
 {
+    for (int i = 0; i < _size; i++)
+    {
+        delete _table[i];
+    }
     delete[] _table;
 }
 
