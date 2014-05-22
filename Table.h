@@ -4,15 +4,18 @@
 class Table
 {
 private:
-	Generation** _slots;
+	Generation** _table;
     int _size;
     int _lastGene;
 
+    void expandTable(int num);
+
 public:
-	Table(void);
+	Table(int size);
 	~Table(void);
 
-	void addGene();
+    void put(Generation *g);
+    inline Generation *get(int i) { return _table[i]; }
     inline int getLastGene() { return _lastGene; }
 
 	Person *search(int gene, string name);
