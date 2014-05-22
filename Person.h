@@ -17,8 +17,9 @@ public:
 
 	void addChild(Person* p);
 
+	/*
 	void put(Sibling* cr);
-	Sibling *get(string name);
+	Sibling *get(string name);*/
 
 	inline Person *nextSibling(){return _nextSibling;};
 	inline Sibling* getChildren(){return _children;};
