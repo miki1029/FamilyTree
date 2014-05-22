@@ -1,4 +1,8 @@
 #pragma once
+#include <string>
+using namespace std;
+class Generation;
+class Person;
 
 class Table
 {
