@@ -6,18 +6,17 @@ private:
     int _gene;
     Person* _parent;
 	Person* _firstSibling;
-    int _numOfSibling;
+    int _count;
 
 public:
     Sibling(int g, Person* p);
     ~Sibling(void);
 
     inline Person* parent() { return _parent;  }
-    inline Person* firstSibling(){ return _firstSibling; };
+    inline Person* firstSibling() { return _firstSibling; };
 	Person* siblingOfN(int n);
     void addSibling(Person* s);
-	int count();
+    inline int count() { return _count; }
     inline int getGene() { return _gene; }
-	
 };
 
