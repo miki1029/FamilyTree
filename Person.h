@@ -14,7 +14,7 @@ private:
     // _nextSibling: 동생 노드
 	Person *_nextSibling;
 public:
-	Person(void);
+	Person(string name, string born, string passedAway);
 	~Person(void);
 
 	void addChild(Person* p);
