@@ -9,6 +9,8 @@ Generation::Generation(int hashSize=1)
 	_tail = new _HashTable;
 	_tail->nextChain = _tail; 
 	for(int i = 0; i < _hashSize; i++)	_ht[i].nextChain = _tail;
+
+	_currIdx = 0; _currHt = NULL;
 }
 
 
@@ -54,7 +56,7 @@ void Generation::put(Sibling* cr){
 		itr->nextChain = item; 
 	}
 }
-Sibling *Generation::get(string name){
+Sibling *Generation::getSiblingByParentName(string name){
 	int key = _hashing(name);
 	_HashTable *itr = NULL;
 
@@ -67,4 +69,49 @@ Sibling *Generation::get(string name){
 
 	return itr->siblings;
 	
+}
+
+Sibling *Generation::siblingOfN(int n){
+	_HashTable *itr ;
+	int ti, i = 1;
+
+	for(ti = 0; ti < _hashSize; ti++){
+		for(itr = _ht[ti].nextChain; itr != itr; itr=itr->nextChain){
+			if(i == n) return itr->siblings;
+			i++;
+		}
+	}
+	return NULL;
+}
+Sibling *Generation::siblingOfN(int n){
+	_HashTable *itr ;
+	int ti, i = 1;
+
+	for(ti = 0; ti < _hashSize; ti++){
+		for(itr = _ht[ti].nextChain; itr != itr; itr=itr->nextChain){
+			if(i == n) return itr->siblings;
+			i++;
+		}
+	}
+	return NULL;
+}
+
+void Generation::moveToBegin(){
+	_currHt = NULL;
+}
+Sibling *Generation::next(){
+	if(_currHt == NULL){
+		_currHt = _ht[0].nextChain;
+
+		if( _currHt != _currHt->nextChain)	return _currHt->siblings;
+	} 
+
+	while( _currIdx < _hashSize 
+		&&  _currHt != _currHt->nextChain ) {
+			_currHt = _currHt->nextChain;
+			if( _currHt != _currHt->nextChain ) return _currHt->siblings;
+			else _currIdx++;
+	}
+
+	return NULL;
 }

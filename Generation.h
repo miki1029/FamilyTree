@@ -13,7 +13,8 @@ private:
 		Sibling *siblings;
 		_HashTable *nextChain;
 	};
-	_HashTable *_ht, *_tail;
+	_HashTable *_ht, *_tail, *_currHt;
+	int _currIdx;
 
 	int _hashing(const string);
 public:
@@ -23,5 +24,6 @@ public:
 	void put(Sibling *s);
 	Sibling *getSiblingByParentName(string name);
 	Sibling *siblingOfN(int i);
-
+	void moveToBegin();
+	Sibling *next();
 };
