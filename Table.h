@@ -20,6 +20,7 @@ public:
     void put(Generation *g);
     inline Generation *get(int i) { return _table[i]; }
     inline int getLastGene() { return _lastGene; }
+    void increaseLastGene();
 
 	Person *search(int gene, string name);
 	Person *search(string name);

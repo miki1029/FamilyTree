@@ -3,18 +3,17 @@
 #include "Sibling.h"
 #include "Table.h"
 
-Table::Table(int size=50)
+Table::Table(int size=51)
 {
     // 0 인덱스는 사용하지 않음(세대 수와 인덱스를 동일하게 하기 위함)
     _size = size;
     _table = new Generation*[_size]();
-    for (int i = 0; i < _size; i++)
+    for (int i = 1; i < _size; i++)
     {
         _table[i] = new Generation(i*log(i));
     }
     _lastGene = 0;
 }
-
 
 Table::~Table(void)
 {
@@ -27,26 +26,32 @@ Table::~Table(void)
 
 void Table::expandTable(int num=20)
 {
-    _size += num;
-    Generation** newTable = new Generation*[_size]();
-    for (int i = 1; i <= _lastGene; i++)
+    Generation** newTable = new Generation*[_size + num]();
+    // 기존 Generation 포인터 복사
+    for (int i = 1; i <= _size; i++)
     {
         newTable[i] = _table[i];
     }
+    // 새로운 Generation 할당
+    for (int i = _size; i < _size + num; i++)
+    {
+        newTable[i] = new Generation(i*log(i));
+    }
     _table = newTable;
+    _size += num;
 }
 
-void Table::put(Generation *g)
+void Table::increaseLastGene()
 {
-    if (_lastGene >= _size - 1) // 50사이즈이면 49인덱스까지 있으므로
-    {
+    _lastGene++;
+    if (_lastGene >= _size - 2)
+    { // size=51일때 인덱스는 50까지 있고 49세대까지 차면(Sibling으로 인해 사실상 50까지 참) 확장
         expandTable();
     }
-    _table[++_lastGene] = g;
 }
 
 Person *Table::search(int gene, string name){
-    Sibling *s = _table[gene + 1]->get(name);
+    Sibling *s = _table[gene + 1]->getSiblingByParentName(name);
 
 	if(s)	return s->parent();
 
@@ -56,7 +61,7 @@ Person *Table::search(int gene, string name){
 Person *Table::search(string name){
 	Sibling *s;
 	for(int i = _lastGene; i > 0; i--){
-        s = _table[i]->get(name);
+        s = _table[i]->getSiblingByParentName(name);
 
 		if(s) return s->parent();
 	}
