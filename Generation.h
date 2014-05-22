@@ -21,7 +21,7 @@ public:
 	~Generation(void);
 
 	void put(Sibling *s);
-	Sibling *get(string name);
-
+	Sibling *getSiblingByParentName(string name);
+	Sibling *siblingOfN(int i);
 
 };
