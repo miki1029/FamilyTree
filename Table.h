@@ -1,10 +1,10 @@
 #pragma once
-#include "Slot.h"
+#include "Generation.h"
 
 class Table
 {
 private:
-	Slot* _slots;
+	Generation** _slots;
     int _size;
     int _lastGene;
 
@@ -12,6 +12,6 @@ public:
 	Table(void);
 	~Table(void);
 
-	void addGene(Slot);
+	void addGene();
     inline int getLastGene() { return _lastGene; }
 };
