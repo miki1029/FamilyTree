@@ -83,18 +83,6 @@ Sibling *Generation::siblingOfN(int n){
 	}
 	return NULL;
 }
-Sibling *Generation::siblingOfN(int n){
-	_HashTable *itr ;
-	int ti, i = 1;
-
-	for(ti = 0; ti < _hashSize; ti++){
-		for(itr = _ht[ti].nextChain; itr != itr; itr=itr->nextChain){
-			if(i == n) return itr->siblings;
-			i++;
-		}
-	}
-	return NULL;
-}
 
 void Generation::moveToBegin(){
 	_currHt = NULL;
