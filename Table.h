@@ -14,4 +14,7 @@ public:
 
 	void addGene();
     inline int getLastGene() { return _lastGene; }
+
+	Person *search(int gene, string name);
+	Person *search(string name);
 };
