@@ -16,3 +16,10 @@ Person::~Person(void)
 void Person::addChild(Person* p){
 	_children->addSibling(p);
 }
+
+void Person::addSibling(Person* p){
+	Person *itr;
+
+	for(itr = this; itr->nextSibling() != itr; itr=itr->nextSibling());
+	itr->_nextSibling = p;
+}

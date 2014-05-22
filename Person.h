@@ -16,6 +16,7 @@ public:
 	~Person(void);
 
 	void addChild(Person* p);
+	void addSibling(Person *p);
 
 	/*
 	void put(Sibling* cr);
