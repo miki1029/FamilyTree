@@ -5,7 +5,7 @@ FamilyTree
 
 
 2. Children Class
- * 어떠한 `Person` Object의 포인터를 가지며, 그 Object의 자식들의 정보를 `Person` Object의 *linked list*의 형태로 소유하고 있습니다. 
+ * 부모에 대한 `Person` Object의 포인터를 가지며, 그 부모의 자식들의 정보를 `Person` Object의 *linked list*의 형태로 소유하고 있습니다. 
 
 3. Table Class 
  * n세대만큼의 `Slot slot[n]`을 가지며 세대가 추가될 때마다 *Reallocation*이 되며 *n*의 크기가 커집니다.
