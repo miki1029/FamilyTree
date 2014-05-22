@@ -1,19 +1,19 @@
 #include "Person.h"
 
 
-Person::Person(void)
+Person::Person()
 {
+	_children = new Sibling();
+	_children->setParent(_siblings->getGene()+1, this);
 }
 
 
 Person::~Person(void)
 {
+	delete _children;
 }
 
-Children* Person::getChildren(){
-	return NULL;
-}
-
-void addChild(Person* p){
+void Person::addChild(Person* p){
+	_children->addSibling(p);
 }
 
