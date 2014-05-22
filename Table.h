@@ -1,5 +1,4 @@
 #pragma once
-#include "Generation.h"
 
 class Table
 {

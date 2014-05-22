@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
-#include "Sibling.h"
 using namespace std;
+
+class Person;
+class Sibling;
 
 class Generation
 {

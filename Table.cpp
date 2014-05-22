@@ -1,3 +1,5 @@
+#include "Generation.h"
+#include "Sibling.h"
 #include "Table.h"
 
 Table::Table(int size=50)

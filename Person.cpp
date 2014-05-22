@@ -1,5 +1,5 @@
 #include "Person.h"
-#include "sibling.h"
+#include "Sibling.h"
 
 
 Person::Person()

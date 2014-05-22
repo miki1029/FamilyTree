@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Sibling.h"
+#include "Person.h"
 
 Sibling::Sibling(int g, Person* p)
 {

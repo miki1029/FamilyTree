@@ -1,3 +1,5 @@
+#include "Person.h"
+#include "Sibling.h"
 #include "Generation.h"
 
 Generation::Generation(int hashSize=1)

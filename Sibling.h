@@ -1,5 +1,5 @@
 #pragma once
-#include "Person.h"
+class Person;
 
 class Sibling
 {
