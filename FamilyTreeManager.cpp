@@ -1,5 +1,7 @@
 #include <iostream>
 #include "FamilyTreeManager.h"
+#include "Person.h"
+#include "Generation.h"
 using namespace std;
 
 void FamilyTreeManager::printMenu()
@@ -18,4 +20,31 @@ void FamilyTreeManager::printMenu()
 void FamilyTreeManager::addPerson()
 {
     cout << "";
+}
+
+void FamilyTreeManager::find(){
+	string name;
+	Person *p;
+	
+	cout<<"검색할 구성원을 입력하세요\n>>";
+	cin>>name;
+
+	p = t.search(name);
+	if( p ){
+		cout<<p->getBorn()<<endl;
+	} else {
+		cout<<"해당 인물을 찾을 수 없습니다."<<endl;
+	}
+
+}
+
+
+void FamilyTreeManager::show(){
+	int i;
+	Generation *g;
+
+	for(i = 1; i < t.getLastGene(); i++){
+		g = t.get(i);
+		
+	}
 }
