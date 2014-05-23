@@ -6,6 +6,8 @@ class FamilyTreeManager
 private :
 	Table *t;
 
+    Person* findPerson();
+
 public:
     FamilyTreeManager();
     ~FamilyTreeManager();

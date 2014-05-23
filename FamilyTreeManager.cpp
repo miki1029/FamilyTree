@@ -105,7 +105,7 @@ void FamilyTreeManager::modifyPerson()
 }
 
 void FamilyTreeManager::show(){
-	int i, j;
+	int i;
 	Generation *g;
 	Sibling *s;
 	Person *p;
@@ -145,6 +145,8 @@ void FamilyTreeManager::findPath(){
 	//1. 목표 선정
 	from = t->search(fromName);
 	target = t->search(targetName);
+    fromSb = from->getSibling();
+    targetSb = from->getSibling();
 	
 	
 	//2. 레벨확인
