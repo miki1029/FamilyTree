@@ -59,6 +59,8 @@ void Sibling::addSibling(Person* s)
 
 void Sibling::traverse()
 {
+    if (_parent != NULL && _count > 0) 
+        cout << "<" << _parent->getName() << "의 자식>" << endl;
     // Person 반복 호출
     for (int i = 1; i <= _count; i++)
     {
