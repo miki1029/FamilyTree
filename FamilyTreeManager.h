@@ -1,11 +1,15 @@
 #pragma once
-#include "Table.h";
+#include "Table.h"
 
 class FamilyTreeManager
 {
 private :
-	Table t;
+	Table *t;
+
 public:
+    FamilyTreeManager();
+    ~FamilyTreeManager();
+
     void printMenu();
     void addPerson();
     void modifyPerson();

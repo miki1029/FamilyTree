@@ -12,6 +12,12 @@ int main(int argc, char** argv)
     {
         manager.printMenu();
         cin >> menu;
+        switch (menu)
+        {
+        case 1:
+            manager.addPerson();
+            break;
+        }
     }
 
 	return 0;
