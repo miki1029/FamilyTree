@@ -101,7 +101,23 @@ void FamilyTreeManager::find(){
 
 void FamilyTreeManager::modifyPerson()
 {
+	string name, born, passedAway;
+	Person *p;
+	cout<<"수정할 사람의 이름을 입력하세요 : ";
+	cin>>name;
+	
+	p = t->search(name);
+	if( p ){
+		cout<<"생년월일 : ";
+		cin>>born;
+		cout<<"기일 : ";
+		cin>>passedAway;
 
+		p->setBorn(born);
+		p->setPassedAway(passedAway);
+	} else {
+		cout<<"해당 인물을 찾을 수 없습니다."<<endl;
+	}
 }
 
 void FamilyTreeManager::show(){
