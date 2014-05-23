@@ -64,7 +64,7 @@ Person *Table::search(int gene, string name){
 
 Person *Table::search(string name){
 	Sibling *s;
-	for(int i = _lastGene; i > 0; i--){
+	for(int i = _lastGene+1; i > 0; i--){
         s = _table[i]->getSiblingByParentName(name);
 
 		if(s) return s->parent();
