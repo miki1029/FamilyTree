@@ -23,7 +23,7 @@ public:
 	inline Person *nextSibling(){return _nextSibling;}
 
 	inline Sibling* getChildren(){return _children;}
-    inline void setSibling(Sibling* sibling) { _sibling = sibling; }
+    void setSibling(Sibling* sibling);
     inline Sibling* getSibling(){ return _sibling; }
 	inline void setName(string name){ _name = name; }
 	inline string getName(){return _name; }

@@ -7,10 +7,9 @@ Person::Person(string name, string born, string passedAway){
 	_born = born;
 	_passedAway = passedAway;
 
-	_children = new Sibling(_sibling->getGene()+1, this);
+	//_children = new Sibling(_sibling->getGene()+1, this);
 	_nextSibling = this;
 }
-
 
 Person::~Person(void)
 {
@@ -26,4 +25,10 @@ void Person::addSibling(Person* p){
 
 	for(itr = this; itr->nextSibling() != itr; itr=itr->nextSibling());
 	itr->_nextSibling = p;
+}
+
+void Person::setSibling(Sibling* sibling)
+{
+    _sibling = sibling;
+    _children = new Sibling(_sibling->getGene() + 1, this);
 }
