@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "FamilyTreeManager.h"
 #include "Person.h"
 #include "Sibling.h"
@@ -223,5 +224,18 @@ void FamilyTreeManager::findPath(){
 
 void FamilyTreeManager::save()
 {
+	ofstream fout;
+	string pname, name, born, passedAway;
+	Person *p;
+	Generation *g;
 
+	fout.open("kims.ftl");
+
+	if(fout.is_open()){
+		g = t->get(1);
+		
+		for ( int i = 2; i <= t->getLastGene(); i++){
+			//if(i == 
+		}
+	}
 }
