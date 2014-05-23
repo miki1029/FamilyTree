@@ -215,7 +215,7 @@ void FamilyTreeManager::save()
 	Sibling **s;
 	int i, j;
 
-	fout.open("kims.txt");
+	fout.open("kims.ftl");
 
 	if(fout.is_open()){
 		g = t->get(1);
@@ -223,10 +223,10 @@ void FamilyTreeManager::save()
 
 		for(i = 0; i < g->getNumOfSibling(); i++){
 			p = s[i]->firstSibling();
-			do{
+			for(int j = 0; j < s[i]->count(); j++){
 				fout<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
 				p = p->nextSibling();
-			}while(p != p->nextSibling()); 
+			} 
 		}
 
 		for(i = 2; i <= t->getLastGene(); i++){
@@ -234,17 +234,64 @@ void FamilyTreeManager::save()
 			g = t->get(i);
 			s = g->getSiblingArr();
 			
-			
-			
 			for(j = 0; j < g->getNumOfSibling(); j++){
 				pname = s[j]->parent()->getName();
 				p = s[j]->firstSibling();
-				do{
+				for(int k = 0; k < s[j]->count(); k++){
 					fout<<pname<<" "<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
 					p = p->nextSibling();
-				}while(p != p->nextSibling()); 
+				} 
 			}
 		}
 		fout.close();
+	}
+}
+
+void FamilyTreeManager::load(){
+	ifstream fin;
+	string name, pname, born, passedAway;
+	fin.open("kims.ftl");
+
+	if(fin.is_open()){
+		while( !fin.eof() ){
+
+			if (t->getLastGene() < 1)
+			{
+				// rootSibling 초기화
+				Sibling* rootSibling = new Sibling(1, NULL);
+				t->get(1)->put(rootSibling);
+
+				
+				fin >> name >> born >> passedAway;
+
+				
+				// rootSibling의 형제로 추가
+				Person* newPerson = new Person(name, born, passedAway);
+				rootSibling->addSibling(newPerson);
+				t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
+				t->increaseLastGene();
+				cout<<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
+			}
+			else
+			{
+				
+				Person* parent;
+				fin >> pname >> name >> born >> passedAway;
+				
+				parent = t->search(pname);
+
+				if (parent == NULL) { cout << pname << "이 존재하지 않습니다." << endl; continue;/* return; */}
+
+				// parent의 자식으로 추가
+				Person* newPerson = new Person(name, born, passedAway);
+				parent->addChild(newPerson);
+				int putResult = t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
+				if(putResult) t->increaseLastGene();
+				
+				cout<< pname << " " <<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
+			}
+
+		}
+		fin.close();
 	}
 }

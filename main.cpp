@@ -8,6 +8,8 @@ int main(int argc, char** argv)
     FamilyTreeManager manager;
     int menu = 0;
 
+	manager.load();
+
     while (menu != EXIT_CODE)
     {
         manager.printMenu();

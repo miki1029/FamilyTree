@@ -13,6 +13,7 @@ public:
     ~FamilyTreeManager();
 
     void printMenu();
+	void load();
     
     void addPerson();       // 1
     void find();            // 2
