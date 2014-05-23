@@ -5,6 +5,7 @@
 Generation::Generation(int hashSize)
 {
 	_hashSize = hashSize;
+    _numOfSibling = 0;
 	_ht = new _HashTable[_hashSize];
 	_tail = new _HashTable;
 	_tail->nextChain = _tail; 
@@ -52,12 +53,12 @@ int Generation::put(Sibling* cr){
 		item->siblings = cr;
 		item->nextChain = itr->nextChain;
 		itr->nextChain = item; 
-	}
+    }
+    _numOfSibling++;
     int originKeyNum = _keySet.size();
     _keySet.insert(key);
     if (originKeyNum == 0) return 1; // 새로운 세대 추가
     else return 0; // 일반적인 Sibling 추가
-     
 }
 
 Sibling *Generation::getSiblingByParentName(string name){
@@ -89,6 +90,26 @@ void Generation::traverse()
             Sibling* curSB = curHT->siblings;
             // Person 반복 호출
             curSB->traverse();
+        }
+    }
+}
+
+Sibling** Generation::getSiblingArr()
+{
+    int i = 0;
+    Sibling** arr = new Sibling*[_numOfSibling];
+    set<int>::iterator itr;
+    // hashing의 반복 호출
+    for (itr = _keySet.begin(); itr != _keySet.end(); itr++)
+    {
+        // chaining의 반복 호출
+        for (_HashTable* curHT = _ht[*itr].nextChain;
+            curHT != _tail;
+            curHT = curHT->nextChain)
+        {
+            Sibling* curSB = curHT->siblings;
+            // Person 반복 호출
+            arr[i++] = curSB;
         }
     }
 }

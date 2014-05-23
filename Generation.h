@@ -10,6 +10,7 @@ class Generation
 {
 private:
 	int _hashSize;
+    int _numOfSibling;
 	struct _HashTable {
 		Sibling *siblings;
 		_HashTable *nextChain;
@@ -30,4 +31,6 @@ public:
     inline set<int> keySet() { return _keySet; };
 
     void traverse();
+    Sibling** getSiblingArr();
+    inline int getNumOfSibling() { return _numOfSibling; }
 };
