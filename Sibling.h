@@ -19,5 +19,7 @@ public:
     void addSibling(Person* s);
     inline int count() { return _count; }
     inline int getGene() { return _gene; }
+
+    void traverse();
 };
 

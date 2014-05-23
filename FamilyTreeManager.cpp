@@ -76,8 +76,8 @@ void FamilyTreeManager::addPerson()
         // parent의 자식으로 추가
         Person* newPerson = new Person(name, born, passedAway);
         parent->addChild(newPerson);
-        t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
-        t->increaseLastGene();
+        int putResult = t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
+        if(putResult) t->increaseLastGene();
     }
 }
 
@@ -121,23 +121,7 @@ void FamilyTreeManager::modifyPerson()
 }
 
 void FamilyTreeManager::show(){
-	int i;
-	Generation *g;
-	Sibling *s;
-	Person *p;
-
-	for(i = 1; i <= t->getLastGene(); i++){
-		g = t->get(i); //i번째 세대 정보
-		cout<<"["<<i<<"번째 세대]"<<endl;
-		while( (s = g->next()) != NULL){
-			p = s->firstSibling();
-			while(p->nextSibling() != p){
-				cout<<p->getName()<<"/"<<p->getBorn()<<"/"<<p->getPassedAway()<<" ";
-			}
-		}
-		cout<<endl
-			<<"==========================================="<<endl;;
-	}
+    t->traverse();
 }
 
 void FamilyTreeManager::findPath(){

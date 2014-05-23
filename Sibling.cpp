@@ -36,9 +36,9 @@ Person* Sibling::siblingOfN(int n)
         return NULL;
     }
     Person* nthSibling = _firstSibling;
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i < n; i++)
     {
-        nthSibling = _firstSibling->nextSibling();
+        nthSibling = nthSibling->nextSibling();
     }
 	return nthSibling;
 }
@@ -55,4 +55,15 @@ void Sibling::addSibling(Person* s)
     }
     s->setSibling(this);
     _count++;
+}
+
+void Sibling::traverse()
+{
+    // Person 반복 호출
+    for (int i = 1; i <= _count; i++)
+    {
+        Person* p = siblingOfN(i);
+        cout << p->getName() << "/" << p->getBorn() << "/" << p->getPassedAway() << " ";
+    }
+    cout << endl;
 }

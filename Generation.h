@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <set>
 using namespace std;
 
 class Person;
@@ -13,17 +14,20 @@ private:
 		Sibling *siblings;
 		_HashTable *nextChain;
 	};
-	_HashTable *_ht, *_tail, *_currHt;
-	int _currIdx;
+    _HashTable *_ht, *_tail;
+
+    set<int> _keySet;
 
 	int _hashing(const string);
 public:
 	Generation(int hashSize);
 	~Generation(void);
 
-	void put(Sibling *s);
-	Sibling *getSiblingByParentName(string name);
-	Sibling *siblingOfN(int i);
-	void moveToBegin();
-	Sibling *next();
+    int put(Sibling *s);
+    Sibling *getSiblingByParentName(string name);
+
+    inline _HashTable *getHashTable() { return _ht; }
+    inline set<int> keySet() { return _keySet; };
+
+    void traverse();
 };

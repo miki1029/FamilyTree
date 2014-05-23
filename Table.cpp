@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cmath>
 #include "Generation.h"
 #include "Sibling.h"
@@ -70,4 +71,14 @@ Person *Table::search(string name){
 		if(s) return s->parent();
 	}
 	return NULL;
+}
+
+void Table::traverse()
+{
+    for (int i = 1; i <= _lastGene; i++)
+    {
+        Generation* g = _table[i];
+        cout << "[" << i << "번째 세대]" << endl;
+        g->traverse();
+    }
 }
