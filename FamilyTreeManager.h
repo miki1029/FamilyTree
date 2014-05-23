@@ -16,4 +16,5 @@ public:
     void find();
     void show();
     void save();
+	void findPath();
 };
