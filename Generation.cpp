@@ -112,4 +112,6 @@ Sibling** Generation::getSiblingArr()
             arr[i++] = curSB;
         }
     }
+
+	return arr;
 }

@@ -209,17 +209,42 @@ void FamilyTreeManager::findPath(){
 void FamilyTreeManager::save()
 {
 	ofstream fout;
-	string pname, name, born, passedAway;
+	string pname;
 	Person *p;
 	Generation *g;
+	Sibling **s;
+	int i, j;
 
-	fout.open("kims.ftl");
+	fout.open("kims.txt");
 
 	if(fout.is_open()){
 		g = t->get(1);
-		
-		for ( int i = 2; i <= t->getLastGene(); i++){
-			//if(i == 
+		s = g->getSiblingArr();
+
+		for(i = 0; i < g->getNumOfSibling(); i++){
+			p = s[i]->firstSibling();
+			do{
+				fout<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
+				p = p->nextSibling();
+			}while(p != p->nextSibling()); 
 		}
+
+		for(i = 2; i <= t->getLastGene(); i++){
+			
+			g = t->get(i);
+			s = g->getSiblingArr();
+			
+			
+			
+			for(j = 0; j < g->getNumOfSibling(); j++){
+				pname = s[j]->parent()->getName();
+				p = s[j]->firstSibling();
+				do{
+					fout<<pname<<" "<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
+					p = p->nextSibling();
+				}while(p != p->nextSibling()); 
+			}
+		}
+		fout.close();
 	}
 }
