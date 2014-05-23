@@ -17,6 +17,21 @@ int main(int argc, char** argv)
         case 1:
             manager.addPerson();
             break;
+        case 2:
+            manager.find();
+            break;
+        case 3:
+            manager.modifyPerson();
+            break;
+        case 4:
+            manager.show();
+            break;
+        case 5:
+            manager.findPath();
+            break;
+        case 6:
+            manager.save();
+            break;
         }
     }
 
