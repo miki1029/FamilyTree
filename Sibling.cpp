@@ -30,7 +30,7 @@ Person *Sibling::firstSibling(){ return _firstSibling;  }
 
 Person* Sibling::siblingOfN(int n)
 {
-    if (n >= _count)
+    if (n > _count)
     {
         cout << n << "번째 형제가 존재하지 않습니다." << endl;
         return NULL;
