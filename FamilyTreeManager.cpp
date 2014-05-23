@@ -83,7 +83,7 @@ void FamilyTreeManager::find(){
 
 	p = t->search(name);
 	if( p ){
-		cout<<p->getName<<endl
+		cout<<p->getName()<<endl
 			<<p->getBorn()<<endl
 			<<p->getPassedAway()<<endl;
 	} else {
@@ -103,8 +103,8 @@ void FamilyTreeManager::show(){
 		g = t->get(i); //i번째 세대 정보
 		cout<<"["<<i<<"번째 세대]"<<endl;
 		while( (s = g->next()) != NULL){
-			p = s->firstSibling;
-			while(p->nextSibling != p){
+			p = s->firstSibling();
+			while(p->nextSibling() != p){
 				cout<<p->getName()<<"/"<<p->getBorn()<<"/"<<p->getPassedAway()<<" ";
 			}
 		}
@@ -137,7 +137,7 @@ void FamilyTreeManager::findPath(){
 	
 	
 	//2. 레벨확인
-	for(int i = 1; i <= t->getLastGene; i++){
+	for(int i = 1; i <= t->getLastGene(); i++){
 		if(fromSb == NULL){
 			fromSb = t->get(i)->getSiblingByParentName(from->getName());
 			if(fromSb != NULL) fLevel = i; 
