@@ -3,14 +3,16 @@
 #include "Sibling.h"
 #include "Table.h"
 
-Table::Table(int size=51)
+Table::Table(int size)
 {
     // 0 인덱스는 사용하지 않음(세대 수와 인덱스를 동일하게 하기 위함)
     _size = size;
     _table = new Generation*[_size]();
-    for (int i = 1; i < _size; i++)
+    for (int i = 0; i < _size; i++)
     {
-        _table[i] = new Generation(i*log(i));
+        double genSize = i * log(i);
+        if (genSize < 10 || i == 0) genSize = 10.0;
+        _table[i] = new Generation((int)genSize);
     }
     _lastGene = 0;
 }
@@ -35,7 +37,9 @@ void Table::expandTable(int num=20)
     // 새로운 Generation 할당
     for (int i = _size; i < _size + num; i++)
     {
-        newTable[i] = new Generation(i*log(i));
+        double genSize = i * log(i);
+        if (genSize < 10) genSize = 10.0;
+        newTable[i] = new Generation((int)genSize);
     }
     _table = newTable;
     _size += num;
