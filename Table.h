@@ -24,4 +24,6 @@ public:
 
 	Person *search(int gene, string name);
 	Person *search(string name);
+    
+    void traverse();
 };

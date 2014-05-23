@@ -2,17 +2,14 @@
 #include "Sibling.h"
 #include "Generation.h"
 
-Generation::Generation(int hashSize=1)
+Generation::Generation(int hashSize)
 {
 	_hashSize = hashSize;
 	_ht = new _HashTable[_hashSize];
 	_tail = new _HashTable;
 	_tail->nextChain = _tail; 
 	for(int i = 0; i < _hashSize; i++)	_ht[i].nextChain = _tail;
-
-	_currIdx = 0; _currHt = NULL;
 }
-
 
 Generation::~Generation(void)
 {
@@ -35,7 +32,7 @@ int Generation::_hashing(const string s){
 	return abs(h) % _hashSize;
 }
 
-void Generation::put(Sibling* cr){
+int Generation::put(Sibling* cr){
 
 	bool searchFlag = false;
 	_HashTable *itr = NULL;
@@ -56,7 +53,13 @@ void Generation::put(Sibling* cr){
 		item->nextChain = itr->nextChain;
 		itr->nextChain = item; 
 	}
+    int originKeyNum = _keySet.size();
+    _keySet.insert(key);
+    if (originKeyNum == 0) return 1; // 새로운 세대 추가
+    else return 0; // 일반적인 Sibling 추가
+     
 }
+
 Sibling *Generation::getSiblingByParentName(string name){
 	int key = _hashing(name);
 	_HashTable *itr = NULL;
@@ -72,35 +75,20 @@ Sibling *Generation::getSiblingByParentName(string name){
 	
 }
 
-Sibling *Generation::siblingOfN(int n){
-	_HashTable *itr ;
-	int ti, i = 1;
-
-	for(ti = 0; ti < _hashSize; ti++){
-		for(itr = _ht[ti].nextChain; itr != itr; itr=itr->nextChain){
-			if(i == n) return itr->siblings;
-			i++;
-		}
-	}
-	return NULL;
-}
-
-void Generation::moveToBegin(){
-	_currHt = NULL;
-}
-Sibling *Generation::next(){
-	if(_currHt == NULL){
-		_currHt = _ht[0].nextChain;
-
-		if( _currHt != _currHt->nextChain)	return _currHt->siblings;
-	} 
-
-	while( _currIdx < _hashSize 
-		&&  _currHt != _currHt->nextChain ) {
-			_currHt = _currHt->nextChain;
-			if( _currHt != _currHt->nextChain ) return _currHt->siblings;
-			else _currIdx++;
-	}
-
-	return NULL;
+void Generation::traverse()
+{
+    set<int>::iterator itr;
+    // hashing의 반복 호출
+    for (itr = _keySet.begin(); itr != _keySet.end(); itr++)
+    {
+        // chaining의 반복 호출
+        for (_HashTable* curHT = _ht[*itr].nextChain;
+            curHT != _tail;
+            curHT = curHT->nextChain)
+        {
+            Sibling* curSB = curHT->siblings;
+            // Person 반복 호출
+            curSB->traverse();
+        }
+    }
 }
