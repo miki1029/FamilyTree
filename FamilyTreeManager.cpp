@@ -127,7 +127,7 @@ void FamilyTreeManager::show(){
 void FamilyTreeManager::findPath(){
 	string fromName, targetName;
 	Person **pFrom, **pTarget;
-	Person *from, *target;
+	Person *from, *target, *oFrom, *oTarget;
 	Sibling *fromSb, *targetSb;
 	int fLevel=0, tLevel=0;
 	int pFromCnt =0, pTargetCnt=0; 
@@ -146,31 +146,34 @@ void FamilyTreeManager::findPath(){
 	from = t->search(fromName);
 	target = t->search(targetName);
     fromSb = from->getSibling();
-    targetSb = from->getSibling();
-	
+    targetSb = target->getSibling();
+
+	oFrom = from;
+	oTarget = target;
 	
 	//2. 레벨확인
-	for(int i = 1; i <= t->getLastGene(); i++){
+	for(int i = 1; i <= t->getLastGene() && (!fromSb && !targetSb); i++){
 		if(fromSb == NULL){
 			fromSb = t->get(i)->getSiblingByParentName(from->getName());
-			if(fromSb != NULL) fLevel = i; 
 		}	
 		if(targetSb == NULL){
 			targetSb= t->get(i)->getSiblingByParentName(target->getName());
-			if(targetSb != NULL) tLevel = i;
 		}
 	}
 
+	if(fromSb)	fLevel = fromSb->getGene();
+	if(targetSb) tLevel = targetSb->getGene();
+
 	//3. 세대 확인하면서 세대를 올라감.
-	while( fromSb != targetSb){
+	while( from != target){
 		if( fLevel > tLevel){	//출발점의 세대가 아래일 경우
 			fLevel--;
-			pFrom[pFromCnt++] = from;
+				pFrom[pFromCnt++] = from;
 			from = fromSb->parent();
 			fromSb = from->getSibling();
 		} else if(fLevel < tLevel){//목표지점 세대가 아래일 경우
 			tLevel--;
-			pTarget[pTargetCnt++] = target;
+				pTarget[pTargetCnt++] = target;
 			target = targetSb->parent();
 			targetSb = target->getSibling();
 		} else {
@@ -189,11 +192,16 @@ void FamilyTreeManager::findPath(){
 	}
 	
 	//from to related parent
-	for(int i = 0; i < pFromCnt; i++) cout<<pFrom[i]->getName()<<endl;
+	//cout<<oFrom->getName()<<endl;
+	for(int i = 0; i < pFromCnt; i++)
+		cout<<pFrom[i]->getName()<<endl;
 	//related parent
-	cout<<pTarget[pTargetCnt-1]->getSibling()->parent()<<endl;
+
+	cout<<from->getName()<<endl;
+	//if(	fromSb->parent() != oFrom ) cout<<fromSb->parent()->getName()<<endl;
 	//from after related parent to target
 	for(int i = pTargetCnt-1; i >= 0; i--) cout<<pTarget[i]->getName()<<endl; 
+	//cout<<oTarget->getName()<<endl;
 	cout<<"총 촌수 : "<<pFromCnt+pTargetCnt+(target != from ? 2 : 0)<<endl;
 }
 
