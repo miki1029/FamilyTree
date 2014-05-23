@@ -39,8 +39,9 @@ void Generation::put(Sibling* cr){
 
 	bool searchFlag = false;
 	_HashTable *itr = NULL;
-
-	int key = _hashing(cr->parent()->getName());
+    int key;
+    if (cr->parent() == NULL) key = 0;
+    else key = _hashing(cr->parent()->getName());
 
 		
 	if ( _ht[key].nextChain == _tail){	// 해당 해시테이블에 내용이 없을 경우
