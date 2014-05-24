@@ -10,7 +10,7 @@ private:
 	Generation** _table;
     int _size;
     int _lastGene;
-    string familyName; // 성씨
+    string _familyName; // 성씨
 
     void expandTable(int num);
 
@@ -23,11 +23,15 @@ public:
     
     inline int getLastGene() { return _lastGene; }
     void increaseLastGene();
-    inline void setFamilyName(string n) { familyName = n; }
-    inline string getFamilyName() { return familyName; }
+    inline void setFamilyName(string n) { _familyName = n; }
+    inline string getFamilyName() { return _familyName; }
 
+    // 세대에서 검색
 	Person *search(int gene, string name);
+    // 전체에서 검색
 	Person *search(string name);
+    // 동명이인 검색
+    Person *search(Person** arr, int n, string name);
     
     void traverse();
 };

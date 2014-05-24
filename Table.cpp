@@ -73,6 +73,26 @@ Person *Table::search(string name){
 	return NULL;
 }
 
+Person *Table::search(Person** arr, int n, string name)
+{
+    Sibling *s;
+    bool find = false;
+    for (int i = _lastGene + 1; i > 0; i--){
+        for (int j = 0; j < _table[i]->getNumOfSameParentName(name); j++) {
+            s = _table[i]->getSiblingByParentNameArr(name)[j];
+            if (s) {
+                for (int i = 0; i < n; i++) {
+                    if (s->parent() == arr[i]) find = true;
+                }
+                if (!find) {
+                    return s->parent();
+                }
+            }
+        }
+    }
+    return NULL;
+}
+
 void Table::traverse()
 {
     for (int i = 1; i <= _lastGene; i++)
