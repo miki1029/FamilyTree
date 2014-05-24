@@ -44,11 +44,15 @@ void FamilyTreeManager::addPerson()
         t->get(1)->put(rootSibling);
 
         // 정보 입력
-        string name, born, passedAway;
+        string familyName, name, born, passedAway;
         cout << "1대손을 먼저 추가합니다." << endl;
+        cout << " 성씨: "; cin >> familyName;
         cout << " 이름: "; cin >> name;
         cout << " 생년월일(yyyy-mm-dd): "; cin >> born;
         cout << " 기일(없으면 0000-00-00): "; cin >> passedAway;
+
+        // 성씨 설정
+        t->setFamilyName(familyName);
 
         // rootSibling의 형제로 추가
         Person* newPerson = new Person(name, born, passedAway);
@@ -62,6 +66,7 @@ void FamilyTreeManager::addPerson()
         Person* parent;
         int g;
 
+        cout << t->getFamilyName() << " 가문의 구성원을 추가합니다." << endl;
         cout << "추가할 구성원의 부모 이름을 입력해 주세요." << endl;
         cout << ">> "; cin >> parentName;
         cout << "세대 수를 알고 있습니까?(Y: 숫자 입력, N:0 입력) "; cin >> g;
@@ -208,6 +213,7 @@ void FamilyTreeManager::modifyPerson()
 }
 
 void FamilyTreeManager::show(){
+    cout << t->getFamilyName() << " 가문 족보" << endl << endl;
     t->traverse();
 }
 
@@ -336,7 +342,7 @@ void FamilyTreeManager::save()
 
 void FamilyTreeManager::load(){
 	ifstream fin;
-	string name, pname, born, passedAway;
+    string familyName, pname, name, born, passedAway;
 	fin.open("data.ftl");
 
 	if(fin.is_open()){
@@ -354,14 +360,17 @@ void FamilyTreeManager::load(){
 				    Sibling* rootSibling = new Sibling(1, NULL);
 				    t->get(1)->put(rootSibling);
 
-				    fin >> name >> born >> passedAway;
+                    fin >> familyName >> name >> born >> passedAway;
+
+                    // 성씨 설정
+                    t->setFamilyName(familyName);
 
 				    // rootSibling의 형제로 추가
 				    Person* newPerson = new Person(name, born, passedAway);
 				    rootSibling->addSibling(newPerson);
 				    t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
 				    t->increaseLastGene();
-				    cout<<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
+				    cout<<familyName<<" "<<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
 			    }
 			    else
 			    {
