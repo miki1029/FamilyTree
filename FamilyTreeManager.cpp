@@ -62,24 +62,19 @@ void FamilyTreeManager::addPerson()
     }
     else
     {
-        string parentName;
         Person* parent;
-        int g;
 
         cout << t->getFamilyName() << " 가문의 구성원을 추가합니다." << endl;
         cout << "추가할 구성원의 부모 이름을 입력해 주세요." << endl;
-        cout << ">> "; cin >> parentName;
-        cout << "세대 수를 알고 있습니까?(Y: 숫자 입력, N:0 입력) "; cin >> g;
-
-        // parentName으로 부모 탐색: parent
-        if (g == 0) parent = t->search(parentName);
-        else if (g > 0) parent = t->search(g, parentName);
-        else { cout << "잘못된 입력입니다." << endl; return; }
-        if (parent == NULL) { cout << parentName << "이 존재하지 않습니다." << endl; return; }
+        parent = _findPerson();
+        if (parent == NULL) {
+            return;
+        }
+        cout << endl;
 
         // 정보 입력
         string name, born, passedAway;
-        cout << parentName << "의 자식을 추가합니다." << endl;
+        cout << parent->getName() << "의 자식을 추가합니다." << endl;
         cout << "날짜는 yyyy-mm-dd 형식으로, 기일이 없으면 -을 입력합니다." << endl;
         cout << " 이름: "; cin >> name;
         cout << " 생년월일: "; cin >> born;
@@ -98,12 +93,20 @@ Person* FamilyTreeManager::_findPerson()
 {
     string findName;
     Person *p;
+    int g;
 
     cout << ">> "; cin >> findName;
     cout << endl;
 
-    p = t->search(findName);
-    if (p){
+    cout << "세대 수를 알고 있습니까?(Y: 숫자 입력, N:0 입력) "; cin >> g;
+    cout << endl;
+
+    if (g == 0) p = t->search(findName);
+    else if (g > 0) p = t->search(g, findName);
+    else { cout << "잘못된 입력입니다." << endl; return NULL; }
+    if (p == NULL) { cout << findName << "이 존재하지 않습니다." << endl; return NULL; }
+
+    if (p) {
         _printPerson(p);
         return p;
     }
