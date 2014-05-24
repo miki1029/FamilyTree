@@ -224,7 +224,7 @@ void FamilyTreeManager::save()
 		for(i = 0; i < g->getNumOfSibling(); i++){
 			p = s[i]->firstSibling();
 			for(int j = 0; j < s[i]->count(); j++){
-				fout<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
+				fout<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway();
 				p = p->nextSibling();
 			} 
 		}
@@ -238,7 +238,7 @@ void FamilyTreeManager::save()
 				pname = s[j]->parent()->getName();
 				p = s[j]->firstSibling();
 				for(int k = 0; k < s[j]->count(); k++){
-					fout<<pname<<" "<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway()<<endl;
+					fout<<endl<<pname<<" "<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway();
 					p = p->nextSibling();
 				} 
 			}
