@@ -14,6 +14,7 @@ int main(int argc, char** argv)
     {
         manager.printMenu();
         cin >> menu;
+        cout << endl;
         switch (menu)
         {
         case 1:
@@ -36,6 +37,7 @@ int main(int argc, char** argv)
             break;
         }
     }
+    cout << "프로그램을 종료합니다." << endl;
 
 	return 0;
 }

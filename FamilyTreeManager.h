@@ -6,7 +6,8 @@ class FamilyTreeManager
 private :
 	Table *t;
 
-    Person* findPerson();
+    Person* _findPerson();
+    void _printPerson(Person* p);
 
 public:
     FamilyTreeManager();

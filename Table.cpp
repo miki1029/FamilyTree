@@ -80,5 +80,6 @@ void Table::traverse()
         Generation* g = _table[i];
         cout << "[" << i << "번째 세대]" << endl;
         g->traverse();
+        cout << endl;
     }
 }

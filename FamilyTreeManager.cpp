@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <Windows.h>
 #include "FamilyTreeManager.h"
 #include "Person.h"
 #include "Sibling.h"
@@ -18,15 +19,19 @@ FamilyTreeManager::~FamilyTreeManager()
 
 void FamilyTreeManager::printMenu()
 {
-    cout << endl << "== 메뉴 ==" << endl;
-    cout << "1. 구성원 추가" << endl
-         << "2. 구성원 탐색" << endl
-         << "3. 구성원 수정" << endl
-         << "4. 전체 구성도 출력" << endl
-         << "5. 촌수 계산" << endl
-         << "6. 파일 저장" << endl
-         << "7. 프로그램 종료" << endl
-         << ">> ";
+    fflush(stdin);
+    getchar();
+    system("cls");
+    cout << "========================================" << endl
+         << "    1. 구성원 추가" << endl
+         << "    2. 구성원 탐색" << endl
+         << "    3. 구성원 수정" << endl
+         << "    4. 전체 구성도 출력" << endl
+         << "    5. 촌수 계산" << endl
+         << "    6. 파일 저장" << endl
+         << "    7. 프로그램 종료" << endl
+         << "========================================" << endl
+         << "메뉴 선택 >> ";
 }
 
 void FamilyTreeManager::addPerson()
@@ -70,9 +75,10 @@ void FamilyTreeManager::addPerson()
         // 정보 입력
         string name, born, passedAway;
         cout << parentName << "의 자식을 추가합니다." << endl;
+        cout << "날짜는 yyyy-mm-dd 형식으로, 기일이 없으면 -을 입력합니다." << endl;
         cout << " 이름: "; cin >> name;
-        cout << " 생년월일(yyyy-mm-dd): "; cin >> born;
-        cout << " 기일(없으면 0000-00-00): "; cin >> passedAway;
+        cout << " 생년월일: "; cin >> born;
+        cout << " 기일: "; cin >> passedAway;
 
         // parent의 자식으로 추가
         Person* newPerson = new Person(name, born, passedAway);
@@ -80,44 +86,124 @@ void FamilyTreeManager::addPerson()
         int putResult = t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
         if(putResult) t->increaseLastGene();
     }
+    cout << "구성원을 추가하였습니다." << endl;
 }
 
-void FamilyTreeManager::find(){
-	string name;
-	Person *p;
-	
-	cout<<"검색할 구성원을 입력하세요\n>>";
-	cin>>name;
+Person* FamilyTreeManager::_findPerson()
+{
+    string findName;
+    Person *p;
 
-	p = t->search(name);
-	if( p ){
-		cout<<p->getName()<<endl
-			<<p->getBorn()<<endl
-			<<p->getPassedAway()<<endl;
-	} else {
-		cout<<"해당 인물을 찾을 수 없습니다."<<endl;
-	}
+    cout << ">> "; cin >> findName;
+    cout << endl;
 
+    p = t->search(findName);
+    if (p){
+        _printPerson(p);
+        return p;
+    }
+    else {
+        cout << "해당 인물을 찾을 수 없습니다." << endl;
+        return NULL;
+    }
+}
+
+void FamilyTreeManager::_printPerson(Person* p)
+{
+    cout << p->getName() << "의 정보" << endl
+        << "세대: " << p->getSibling()->getGene() << endl
+        << "이름: " << p->getName() << endl
+        << "생년월일: " << p->getBorn() << endl
+        << "기일: " << p->getPassedAway() << endl;
+}
+
+void FamilyTreeManager::find()
+{
+    cout << "검색할 구성원의 이름을 입력해 주세요." << endl;
+    Person *p = _findPerson();
+
+    while (p != NULL) {
+        fflush(stdin);
+        getchar();
+        int menu = 0;
+        cout << "----------------------------------------" << endl
+            << p->getName() << "의 가족 관계를 탐색합니다." << endl
+            << "1. 부모 탐색" << endl
+            << "2. 첫째 형제 탐색" << endl
+            << "3. 동생 탐색" << endl
+            << "4. 첫째 자식 탐색" << endl
+            << "5. 탐색 종료" << endl
+            << "----------------------------------------" << endl
+            << "메뉴 선택 >> "; cin >> menu;
+        cout << endl;
+        switch (menu) {
+        case 1:
+            if (p->getSibling()->parent() == NULL) {
+                cout << "시조는 부모의 정보가 없습니다." << endl;
+            }
+            else {
+                cout << "부모 ";
+                p = p->getSibling()->parent();
+                _printPerson(p);
+            }
+            break;
+        case 2:
+            if (p == p->getSibling()->firstSibling()) {
+                cout << p->getName() << "이(가) 이미 첫째입니다." << endl;
+            }
+            else {
+                cout << "첫째 형제 ";
+                p = p->getSibling()->firstSibling();
+                _printPerson(p);
+            }
+            break;
+        case 3:
+            if (p == p->nextSibling()) {
+                cout << p->getName() << "이(가) 이미 막내입니다." << endl;
+            }
+            else {
+                cout << "막내 ";
+                p = p->nextSibling();
+                _printPerson(p);
+            }
+            break;
+        case 4:
+            if (p->getChildren()->firstSibling() == NULL) {
+                cout << p->getName() << "은(는) 자식이 없습니다." << endl;
+            }
+            else {
+                cout << "첫째 자식 ";
+                p = p->getChildren()->firstSibling();
+                _printPerson(p);
+            }
+            break;
+        case 5:
+            cout << "탐색을 종료합니다." << endl;
+            return;
+        }
+    }
 }
 
 void FamilyTreeManager::modifyPerson()
 {
-	string name, born, passedAway;
-	Person *p;
-	cout<<"수정할 사람의 이름을 입력하세요 : ";
-	cin>>name;
-	
-	p = t->search(name);
-	if( p ){
-		cout<<"생년월일 : ";
-		cin>>born;
-		cout<<"기일 : ";
-		cin>>passedAway;
+    cout << "수정할 구성원의 이름을 입력해 주세요." << endl;
+    Person *p = _findPerson();
+    cout << endl;
+    if (p != NULL)
+    {
+        string name, born, passedAway;
+        cout << p->getName() << "의 정보를 수정합니다." << endl;
 
+        cout << "이름: "; cin >> name;
+        cout << "생년월일: "; cin >> born;
+        cout << "기일: "; cin >> passedAway;
+
+        p->setName(name);
 		p->setBorn(born);
 		p->setPassedAway(passedAway);
+        cout << "수정되었습니다." << endl;
 	} else {
-		cout<<"해당 인물을 찾을 수 없습니다."<<endl;
+        cout << "해당 인물을 찾을 수 없습니다." << endl;
 	}
 }
 
@@ -215,7 +301,7 @@ void FamilyTreeManager::save()
 	Sibling **s;
 	int i, j;
 
-	fout.open("kims.ftl");
+	fout.open("data.ftl");
 
 	if(fout.is_open()){
 		g = t->get(1);
@@ -244,54 +330,71 @@ void FamilyTreeManager::save()
 			}
 		}
 		fout.close();
+        cout << "Save 성공!" << endl;
 	}
 }
 
 void FamilyTreeManager::load(){
 	ifstream fin;
 	string name, pname, born, passedAway;
-	fin.open("kims.ftl");
+	fin.open("data.ftl");
 
 	if(fin.is_open()){
-		while( !fin.eof() ){
+        cout << "저장된 파일을 부르시겠습니까?(Y/n) ";
+        char op;
+        cin >> op;
+        cout << endl;
+        if (!(op == 'n' || op == 'N'))
+        {
+		    while( !fin.eof() ){
 
-			if (t->getLastGene() < 1)
-			{
-				// rootSibling 초기화
-				Sibling* rootSibling = new Sibling(1, NULL);
-				t->get(1)->put(rootSibling);
+			    if (t->getLastGene() < 1)
+			    {
+				    // rootSibling 초기화
+				    Sibling* rootSibling = new Sibling(1, NULL);
+				    t->get(1)->put(rootSibling);
 
+				    fin >> name >> born >> passedAway;
+
+				    // rootSibling의 형제로 추가
+				    Person* newPerson = new Person(name, born, passedAway);
+				    rootSibling->addSibling(newPerson);
+				    t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
+				    t->increaseLastGene();
+				    cout<<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
+			    }
+			    else
+			    {
 				
-				fin >> name >> born >> passedAway;
-
+				    Person* parent;
+				    fin >> pname >> name >> born >> passedAway;
 				
-				// rootSibling의 형제로 추가
-				Person* newPerson = new Person(name, born, passedAway);
-				rootSibling->addSibling(newPerson);
-				t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
-				t->increaseLastGene();
-				cout<<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
-			}
-			else
-			{
-				
-				Person* parent;
-				fin >> pname >> name >> born >> passedAway;
-				
-				parent = t->search(pname);
+				    parent = t->search(pname);
 
-				if (parent == NULL) { cout << pname << "이 존재하지 않습니다." << endl; continue;/* return; */}
+				    if (parent == NULL) { cout << pname << "이 존재하지 않습니다." << endl; continue;/* return; */}
 
-				// parent의 자식으로 추가
-				Person* newPerson = new Person(name, born, passedAway);
-				parent->addChild(newPerson);
-				int putResult = t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
-				if(putResult) t->increaseLastGene();
+				    // parent의 자식으로 추가
+				    Person* newPerson = new Person(name, born, passedAway);
+				    parent->addChild(newPerson);
+				    int putResult = t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
+				    if(putResult) t->increaseLastGene();
 				
-				cout<< pname << " " <<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
-			}
-
-		}
+				    cout<< pname << " " <<name<<" "<<born<<" "<<passedAway<<" Loaded"<<endl;
+			    }
+            }
+            cout << endl << "Load 성공!" << endl;
+        }
+        else
+        {
+            cout << "새로 시작합니다." << endl
+                << "저장시 기존 데이터가 손실됩니다." << endl
+                << "아무 키나 눌러 주세요." << endl;
+        }
 		fin.close();
 	}
+    else
+    {
+        cout << "data.ftl 파일이 없습니다." << endl
+            << "새로 시작하려면 아무 키나 눌러 주세요." << endl;
+    }
 }
