@@ -14,8 +14,9 @@ FamilyTreeManager::FamilyTreeManager()
 
 FamilyTreeManager::~FamilyTreeManager()
 {
-    //delete t; // 왜 에러가 나는지 모르겠음
+    delete t; // 왜 에러가 나는지 모르겠음
 }
+
 
 void FamilyTreeManager::printMenu()
 {
@@ -117,7 +118,9 @@ Person* FamilyTreeManager::_findPerson()
         while (true)
         {
             cout << endl;
-            cout << "찾으신 인물이 맞습니까?(Y/n) "; cin >> ch;
+            cout << "찾으신 인물이 맞습니까?(Y/n) "; 
+			
+			cin >> ch;
             if (ch != 'n') return p;
             cout << "다음 동명이인을 더 검색하시겠습니까?(Y/n) "; cin >> ch;
             cout << endl;

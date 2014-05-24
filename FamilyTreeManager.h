@@ -10,7 +10,7 @@ private :
     void _printPerson(Person* p);
 
 public:
-    FamilyTreeManager();
+	FamilyTreeManager();
     ~FamilyTreeManager();
 
     void printMenu();

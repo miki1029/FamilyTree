@@ -18,12 +18,14 @@ Generation::~Generation(void)
 
 	for(int i = 0 ; i < _hashSize; i++){
 		itr = _ht[i].nextChain;
-		while(itr != NULL){
+		while(itr != _tail){
 			tmp = itr;
 			itr = itr->nextChain;
 			delete tmp;
 		}
+		
 	}
+	delete _tail;
 	delete [] _ht;
 }
 
