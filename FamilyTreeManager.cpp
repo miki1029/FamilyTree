@@ -157,8 +157,6 @@ void FamilyTreeManager::find()
     Person *p = _findPerson();
 
     while (p != NULL) {
-        fflush(stdin);
-        getchar();
         int menu = 0;
         cout << "----------------------------------------" << endl
             << p->getName() << "의 가족 관계를 탐색합니다." << endl
@@ -215,6 +213,8 @@ void FamilyTreeManager::find()
             cout << "탐색을 종료합니다." << endl;
             return;
         }
+        fflush(stdin);
+        getchar();
     }
 }
 

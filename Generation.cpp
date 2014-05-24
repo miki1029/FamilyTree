@@ -85,6 +85,9 @@ Sibling **Generation::getSiblingByParentNameArr(string name){
     Sibling **arr = new Sibling*[_numOfSibling];
 
     for (itr = _ht[key].nextChain; itr != _tail; itr = itr->nextChain) {
+        // 1대조
+        if (itr->siblings->parent() == NULL) return arr;
+        // 나머지
         if (itr->siblings->parent()->getName().compare(name) == 0) {
             arr[numOfArr++] = itr->siblings;
         }
@@ -101,6 +104,9 @@ int Generation::getNumOfSameParentName(string name)
     int num = 0;
 
     for (itr = _ht[key].nextChain; itr != _tail; itr = itr->nextChain) {
+        // 1대조
+        if (itr->siblings->parent() == NULL) return 0;
+        // 나머지
         if (itr->siblings->parent()->getName().compare(name) == 0) {
             num++;
         }
