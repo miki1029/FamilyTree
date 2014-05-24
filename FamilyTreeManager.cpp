@@ -45,7 +45,8 @@ void FamilyTreeManager::addPerson()
 
         // 정보 입력
         string familyName, name, born, passedAway;
-        cout << "1대손을 먼저 추가합니다." << endl;
+        cout << "시조를 먼저 추가합니다." << endl;
+        cout << "날짜는 yyyy-mm-dd 형식으로, 기일이 없으면 -을 입력합니다." << endl;
         cout << " 성씨: "; cin >> familyName;
         cout << " 이름: "; cin >> name;
         cout << " 생년월일(yyyy-mm-dd): "; cin >> born;
@@ -319,7 +320,7 @@ void FamilyTreeManager::save()
 		for(i = 0; i < g->getNumOfSibling(); i++){
 			p = s[i]->firstSibling();
 			for(int j = 0; j < s[i]->count(); j++){
-				fout<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway();
+				fout<<t->getFamilyName()<<" "<<p->getName()<<" "<<p->getBorn()<<" "<<p->getPassedAway();
 				p = p->nextSibling();
 			} 
 		}
