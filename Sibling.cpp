@@ -51,7 +51,15 @@ void Sibling::addSibling(Person* s)
     }
     else
     {
-        siblingOfN(_count)->addSibling(s);
+        //siblingOfN(_count)->addSibling(s);
+        for (int i = _count; i >= 1; i--) {
+            Person* itr = siblingOfN(i);
+            if (s->getBorn().compare(itr->getBorn()) > 0) {
+                if (i != _count) s->addSibling(itr);
+                siblingOfN(i)->addSibling(s);
+                break;
+            }
+        }
     }
     s->setSibling(this);
     _count++;

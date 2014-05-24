@@ -21,10 +21,7 @@ void Person::addChild(Person* p){
 }
 
 void Person::addSibling(Person* p){
-	Person *itr;
-
-	for(itr = this; itr->nextSibling() != itr; itr=itr->nextSibling());
-	itr->_nextSibling = p;
+    _nextSibling = p;
 }
 
 void Person::setSibling(Sibling* sibling)
