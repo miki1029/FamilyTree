@@ -108,7 +108,32 @@ Person* FamilyTreeManager::_findPerson()
     if (p == NULL) { cout << findName << "이 존재하지 않습니다." << endl; return NULL; }
 
     if (p) {
+        int arrSize = 10;
+        int numOfArr = 0;
+        Person** arr = new Person*[arrSize];
+
+        char ch;
         _printPerson(p);
+        while (true)
+        {
+            cout << endl;
+            cout << "찾으신 인물이 맞습니까?(Y/n) "; cin >> ch;
+            if (ch != 'n') return p;
+            cout << "다음 동명이인을 더 검색하시겠습니까?(Y/n) "; cin >> ch;
+            cout << endl;
+            if (ch != 'n') {
+                arr[numOfArr++] = p;
+
+                p = t->search(arr, arrSize, findName);
+                if (p == NULL)
+                {
+                    cout << "동명이인이 없습니다." << endl;
+                    return NULL;
+                }
+                _printPerson(p);
+            }
+            else break;
+        }
         return p;
     }
     else {
@@ -354,7 +379,7 @@ void FamilyTreeManager::load(){
         char op;
         cin >> op;
         cout << endl;
-        if (!(op == 'n' || op == 'N'))
+        if (op != 'n')
         {
 		    while( !fin.eof() ){
 

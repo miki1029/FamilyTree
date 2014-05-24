@@ -25,7 +25,10 @@ public:
 	~Generation(void);
 
     int put(Sibling *s);
+
     Sibling *getSiblingByParentName(string name);
+    Sibling **getSiblingByParentNameArr(string name);
+    int getNumOfSameParentName(string name);
 
     inline _HashTable *getHashTable() { return _ht; }
     inline set<int> keySet() { return _keySet; };

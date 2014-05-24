@@ -28,7 +28,8 @@ Generation::~Generation(void)
 }
 
 int Generation::_hashing(const string s){
-	int h = 0, i=0;
+	int h = 0;
+    unsigned i = 0;
 	while(i <= s.length())	h = h<<1^s[i++];
 	return abs(h) % _hashSize;
 }
@@ -74,6 +75,38 @@ Sibling *Generation::getSiblingByParentName(string name){
 
 	return itr->siblings;
 	
+}
+
+Sibling **Generation::getSiblingByParentNameArr(string name){
+    int key = _hashing(name);
+    _HashTable *itr = NULL;
+
+    int numOfArr = 0;
+    Sibling **arr = new Sibling*[_numOfSibling];
+
+    for (itr = _ht[key].nextChain; itr != _tail; itr = itr->nextChain) {
+        if (itr->siblings->parent()->getName().compare(name) == 0) {
+            arr[numOfArr++] = itr->siblings;
+        }
+    }
+
+    return arr;
+}
+
+int Generation::getNumOfSameParentName(string name)
+{
+    int key = _hashing(name);
+    _HashTable *itr = NULL;
+
+    int num = 0;
+
+    for (itr = _ht[key].nextChain; itr != _tail; itr = itr->nextChain) {
+        if (itr->siblings->parent()->getName().compare(name) == 0) {
+            num++;
+        }
+    }
+
+    return num;
 }
 
 void Generation::traverse()
