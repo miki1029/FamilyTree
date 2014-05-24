@@ -75,18 +75,40 @@ Person *Table::search(string name){
 
 Person *Table::search(Person** arr, int n, string name)
 {
+    /*
     Sibling *s;
     for (int i = _lastGene + 1; i > 0; i--){
         s = _table[i]->getSiblingByParentName(name);
 
         bool find = false;
         if (s) {
-            for (int i = 0; i < n; i++) {
-                if (s->parent() == arr[i]) find = true;
+            for (int j = 0; j < n; j++) {
+                if (s->parent() == arr[j]) find = true;
             }
             if (!find) {
                 // 같은 세대 검색
                 return s->parent();
+            }
+        }
+    }
+    return NULL;*/
+    
+    Sibling *s;
+    for (int i = _lastGene + 1; i > 0; i--){
+        for (int j = 0; j < _table[i]->getNumOfSameParentName(name); j++) {
+            s = _table[i]->getSiblingByParentNameArr(name)[j];
+            //s = _table[i]->getSiblingByParentName(name);
+            bool find = false;
+            if (s) {
+                for (int k = 0; k < n; k++) {
+                    if (s->parent() == arr[k]) {
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find) {
+                    return s->parent();
+                }
             }
         }
     }

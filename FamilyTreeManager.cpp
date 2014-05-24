@@ -124,7 +124,7 @@ Person* FamilyTreeManager::_findPerson()
             if (ch != 'n') {
                 arr[numOfArr++] = p;
 
-                p = t->search(arr, arrSize, findName);
+                p = t->search(arr, numOfArr, findName);
                 if (p == NULL)
                 {
                     cout << "동명이인이 없습니다." << endl;
