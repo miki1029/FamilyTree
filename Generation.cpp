@@ -64,17 +64,18 @@ int Generation::put(Sibling* cr){
 
 Sibling *Generation::getSiblingByParentName(string name){
 	int key = _hashing(name);
-	_HashTable *itr = NULL;
+    _HashTable *itr = NULL;
 
-	for(itr = _ht[key].nextChain;
-		itr != _tail
-			&& itr->siblings->parent()->getName().compare(name) ;
-		itr = itr->nextChain);
+    for (itr = _ht[key].nextChain; itr != _tail; itr = itr->nextChain) {
+        // 1대조
+        if (itr->siblings->parent() == NULL) return NULL;
+        // 나머지
+        if (itr->siblings->parent()->getName().compare(name) == 0) {
+            return itr->siblings;
+        }
+    }
 
-	if(itr == _tail) return NULL;
-
-	return itr->siblings;
-	
+    return NULL;
 }
 
 Sibling **Generation::getSiblingByParentNameArr(string name){
