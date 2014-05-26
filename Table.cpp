@@ -79,7 +79,6 @@ Person *Table::search(Person** arr, int n, string name)
     for (int i = _lastGene + 1; i > 0; i--){
         for (int j = 0; j < _table[i]->getNumOfSameParentName(name); j++) {
             s = _table[i]->getSiblingByParentNameArr(name)[j];
-            //s = _table[i]->getSiblingByParentName(name);
             bool find = false;
             if (s) {
                 for (int k = 0; k < n; k++) {

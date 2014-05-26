@@ -15,7 +15,7 @@ FamilyTreeManager::FamilyTreeManager()
 
 FamilyTreeManager::~FamilyTreeManager()
 {
-    delete t; // 왜 에러가 나는지 모르겠음
+    delete t;
 }
 
 
@@ -352,21 +352,15 @@ void FamilyTreeManager::findPath(){
     for (int i = 0; i < pFromCnt; i++) {
         _printPerson(pFrom[i]);
         cout << endl;
-        //cout<<pFrom[i]->getName()<<endl;
     }
     //related parent
 
-    //cout<<from->getName()<<endl;
     _printPerson(from);
     cout << endl;
-    //if(	fromSb->parent() != oFrom ) cout<<fromSb->parent()->getName()<<endl;
-    //from after related parent to target
-    //for(int i = pTargetCnt-1; i >= 0; i--) cout<<pTarget[i]->getName()<<endl; 
     for (int i = pTargetCnt - 1; i >= 0; i--) {
         _printPerson(pTarget[i]);
         cout << endl;
     }
-    //cout<<oTarget->getName()<<endl;
     cout << "총 촌수 : " << pFromCnt + pTargetCnt + (target != from ? 2 : 0) << endl;
 }
 

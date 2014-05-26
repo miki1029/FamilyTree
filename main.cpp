@@ -40,7 +40,6 @@ int main(int argc, char** argv)
             break;
         }
         else {
-
             cout << sMenu << " : 해당 입력은 올바르지 않은 입력입니다." << endl;
         }
     }
