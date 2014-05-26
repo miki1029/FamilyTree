@@ -3,20 +3,20 @@
 
 class FamilyTreeManager
 {
-private :
-	Table *t;
+private:
+    Table *t;
 
     Person* _findPerson();
     void _printPerson(Person* p);
     bool _validateDate(string born, string passedAway);
 
 public:
-	FamilyTreeManager();
+    FamilyTreeManager();
     ~FamilyTreeManager();
 
     void printMenu();
-	void load();
-    
+    void load();
+
     void addPerson();       // 1
     void find();            // 2
     void modifyPerson();    // 3

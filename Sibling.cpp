@@ -26,7 +26,7 @@ Sibling::~Sibling(void)
 }
 
 Person *Sibling::parent(){ return _parent; }
-Person *Sibling::firstSibling(){ return _firstSibling;  }
+Person *Sibling::firstSibling(){ return _firstSibling; }
 
 Person* Sibling::siblingOfN(int n)
 {
@@ -40,7 +40,7 @@ Person* Sibling::siblingOfN(int n)
     {
         nthSibling = nthSibling->nextSibling();
     }
-	return nthSibling;
+    return nthSibling;
 }
 
 void Sibling::addSibling(Person* s)
@@ -51,7 +51,6 @@ void Sibling::addSibling(Person* s)
     }
     else
     {
-        //siblingOfN(_count)->addSibling(s);
         for (int i = _count; i >= 1; i--) {
             Person* itr = siblingOfN(i);
             if (s->getBorn().compare(itr->getBorn()) >= 0) {

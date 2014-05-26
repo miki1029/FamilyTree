@@ -27,7 +27,7 @@ Table::~Table(void)
     delete[] _table;
 }
 
-void Table::expandTable(int num=20)
+void Table::expandTable(int num = 20)
 {
     Generation** newTable = new Generation*[_size + num]();
     // 기존 Generation 포인터 복사
@@ -58,19 +58,19 @@ void Table::increaseLastGene()
 Person *Table::search(int gene, string name){
     Sibling *s = _table[gene + 1]->getSiblingByParentName(name);
 
-	if(s)	return s->parent();
+    if (s)	return s->parent();
 
-	return NULL;
+    return NULL;
 }
 
 Person *Table::search(string name){
-	Sibling *s;
-	for(int i = _lastGene+1; i > 0; i--){
+    Sibling *s;
+    for (int i = _lastGene + 1; i > 0; i--){
         s = _table[i]->getSiblingByParentName(name);
 
-		if(s) return s->parent();
-	}
-	return NULL;
+        if (s) return s->parent();
+    }
+    return NULL;
 }
 
 Person *Table::search(Person** arr, int n, string name)

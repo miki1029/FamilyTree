@@ -6,7 +6,7 @@ class Sibling
 private:
     int _gene;
     Person* _parent;
-	Person* _firstSibling;
+    Person* _firstSibling;
     int _count;
 
 public:
@@ -15,7 +15,7 @@ public:
 
     Person* parent();
     Person* firstSibling();
-	Person* siblingOfN(int n);
+    Person* siblingOfN(int n);
     void addSibling(Person* s);
     inline int count() { return _count; }
     inline int getGene() { return _gene; }
