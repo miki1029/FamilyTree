@@ -8,6 +8,7 @@ private :
 
     Person* _findPerson();
     void _printPerson(Person* p);
+    bool _validateDate(string born, string passedAway);
 
 public:
 	FamilyTreeManager();

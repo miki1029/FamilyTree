@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <Windows.h>
+#include <regex>
 #include "FamilyTreeManager.h"
 #include "Person.h"
 #include "Sibling.h"
@@ -53,6 +54,9 @@ void FamilyTreeManager::addPerson()
         cout << " 생년월일(yyyy-mm-dd): "; cin >> born;
         cout << " 기일(없으면 0000-00-00): "; cin >> passedAway;
 
+        // 정보 validate
+        if(!_validateDate(born, passedAway)) return;
+
         // 성씨 설정
         t->setFamilyName(familyName);
 
@@ -82,6 +86,9 @@ void FamilyTreeManager::addPerson()
         cout << " 생년월일: "; cin >> born;
         cout << " 기일: "; cin >> passedAway;
 
+        // 정보 validate
+        if (!_validateDate(born, passedAway)) return;
+
         // parent의 자식으로 추가
         Person* newPerson = new Person(name, born, passedAway);
         parent->addChild(newPerson);
@@ -89,6 +96,21 @@ void FamilyTreeManager::addPerson()
         if(putResult) t->increaseLastGene();
     }
     cout << "구성원을 추가하였습니다." << endl;
+}
+
+bool FamilyTreeManager::_validateDate(string born, string passedAway)
+{
+    regex bornRx("^\\d{4}-\\d{2}-\\d{2}$");
+    regex passedAwayRx("(^\\d{4}-\\d{2}-\\d{2}$)|^-$");
+    if (!regex_match(born, bornRx)) {
+        cout << "생일을 올바르게 입력해 주세요." << endl;
+        return false;
+    }
+    if (!regex_match(passedAway, passedAwayRx)) {
+        cout << "기일을 올바르게 입력해 주세요." << endl;
+        return false;
+    }
+    return true;
 }
 
 Person* FamilyTreeManager::_findPerson()
@@ -234,6 +256,9 @@ void FamilyTreeManager::modifyPerson()
         cout << "이름: "; cin >> name;
         cout << "생년월일: "; cin >> born;
         cout << "기일: "; cin >> passedAway;
+
+        // 정보 validate
+        if (!_validateDate(born, passedAway)) return;
 
         p->setName(name);
 		p->setBorn(born);
