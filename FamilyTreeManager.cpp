@@ -8,19 +8,16 @@
 #include "Generation.h"
 using namespace std;
 
-FamilyTreeManager::FamilyTreeManager()
-{
+FamilyTreeManager::FamilyTreeManager() {
     t = new Table(51);
 }
 
-FamilyTreeManager::~FamilyTreeManager()
-{
+FamilyTreeManager::~FamilyTreeManager() {
     delete t;
 }
 
 
-void FamilyTreeManager::printMenu()
-{
+void FamilyTreeManager::printMenu() {
     fflush(stdin);
     getchar();
     system("cls");
@@ -36,11 +33,9 @@ void FamilyTreeManager::printMenu()
         << "메뉴 선택 >> ";
 }
 
-void FamilyTreeManager::addPerson()
-{
+void FamilyTreeManager::addPerson() {
     cout << "구성원을 추가합니다." << endl;
-    if (t->getLastGene() < 1)
-    {
+    if (t->getLastGene() < 1) {
         // rootSibling 초기화
         Sibling* rootSibling = new Sibling(1, NULL);
         t->get(1)->put(rootSibling);
@@ -66,8 +61,7 @@ void FamilyTreeManager::addPerson()
         t->get(newPerson->getChildren()->getGene())->put(newPerson->getChildren());
         t->increaseLastGene();
     }
-    else
-    {
+    else {
         Person* parent;
 
         cout << t->getFamilyName() << " 가문의 구성원을 추가합니다." << endl;
@@ -98,8 +92,7 @@ void FamilyTreeManager::addPerson()
     cout << "구성원을 추가하였습니다." << endl;
 }
 
-bool FamilyTreeManager::_validateDate(string born, string passedAway)
-{
+bool FamilyTreeManager::_validateDate(string born, string passedAway) {
     regex bornRx("^\\d{4}-\\d{2}-\\d{2}$");
     regex passedAwayRx("(^\\d{4}-\\d{2}-\\d{2}$)|^-$");
     if (!regex_match(born, bornRx)) {
@@ -113,8 +106,7 @@ bool FamilyTreeManager::_validateDate(string born, string passedAway)
     return true;
 }
 
-Person* FamilyTreeManager::_findPerson()
-{
+Person* FamilyTreeManager::_findPerson() {
     string findName;
     Person *p;
     int g;
@@ -137,8 +129,7 @@ Person* FamilyTreeManager::_findPerson()
 
         char ch;
         _printPerson(p);
-        while (true)
-        {
+        while (true) {
             cout << endl;
             cout << "찾으신 인물이 맞습니까?(Y/n) ";
 
@@ -150,8 +141,7 @@ Person* FamilyTreeManager::_findPerson()
                 arr[numOfArr++] = p;
 
                 p = t->search(arr, numOfArr, findName);
-                if (p == NULL)
-                {
+                if (p == NULL) {
                     cout << "동명이인이 없습니다." << endl;
                     return NULL;
                 }
@@ -167,8 +157,7 @@ Person* FamilyTreeManager::_findPerson()
     }
 }
 
-void FamilyTreeManager::_printPerson(Person* p)
-{
+void FamilyTreeManager::_printPerson(Person* p) {
     cout << p->getName() << "의 정보" << endl
         << "세대: " << p->getSibling()->getGene() << endl
         << "이름: " << p->getName() << endl
@@ -176,8 +165,7 @@ void FamilyTreeManager::_printPerson(Person* p)
         << "기일: " << p->getPassedAway() << endl;
 }
 
-void FamilyTreeManager::find()
-{
+void FamilyTreeManager::find() {
     cout << "검색할 구성원의 이름을 입력해 주세요." << endl;
     Person *p = _findPerson();
 
@@ -243,13 +231,11 @@ void FamilyTreeManager::find()
     }
 }
 
-void FamilyTreeManager::modifyPerson()
-{
+void FamilyTreeManager::modifyPerson() {
     cout << "수정할 구성원의 이름을 입력해 주세요." << endl;
     Person *p = _findPerson();
     cout << endl;
-    if (p != NULL)
-    {
+    if (p != NULL) {
         string name, born, passedAway;
         cout << p->getName() << "의 정보를 수정합니다." << endl;
 
@@ -364,8 +350,7 @@ void FamilyTreeManager::findPath(){
     cout << "총 촌수 : " << pFromCnt + pTargetCnt + (target != from ? 2 : 0) << endl;
 }
 
-void FamilyTreeManager::save()
-{
+void FamilyTreeManager::save() {
     ofstream fout;
     string pname;
     Person *p;
@@ -416,12 +401,10 @@ void FamilyTreeManager::load(){
         char op;
         cin >> op;
         cout << endl;
-        if (op != 'n')
-        {
+        if (op != 'n') {
             while (!fin.eof()){
 
-                if (t->getLastGene() < 1)
-                {
+                if (t->getLastGene() < 1) {
                     // rootSibling 초기화
                     Sibling* rootSibling = new Sibling(1, NULL);
                     t->get(1)->put(rootSibling);
@@ -438,9 +421,7 @@ void FamilyTreeManager::load(){
                     t->increaseLastGene();
                     cout << familyName << " " << name << " " << born << " " << passedAway << " Loaded" << endl;
                 }
-                else
-                {
-
+                else {
                     Person* parent;
                     fin >> pname >> name >> born >> passedAway;
 
@@ -459,16 +440,14 @@ void FamilyTreeManager::load(){
             }
             cout << endl << "Load 성공!" << endl;
         }
-        else
-        {
+        else {
             cout << "새로 시작합니다." << endl
                 << "저장시 기존 데이터가 손실됩니다." << endl
                 << "아무 키나 눌러 주세요." << endl;
         }
         fin.close();
     }
-    else
-    {
+    else {
         cout << "data.ftl 파일이 없습니다." << endl
             << "새로 시작하려면 아무 키나 눌러 주세요." << endl;
     }
