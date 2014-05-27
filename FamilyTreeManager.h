@@ -10,6 +10,9 @@ private:
     void _printPerson(Person* p);
     bool _validateDate(string born, string passedAway);
 
+    bool _checkNo(string s){ return s.compare("N") == 0 || s.compare("n") == 0 || s.compare("¤Ì") == 0; }
+    bool _checkYes(string s){ return s.compare("Y") == 0 || s.compare("y") == 0 || s.compare("¤Ë") == 0; }
+
 public:
     FamilyTreeManager();
     ~FamilyTreeManager();

@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <Windows.h>
 #include <regex>
 #include "FamilyTreeManager.h"
 #include "Person.h"
@@ -108,18 +107,25 @@ bool FamilyTreeManager::_validateDate(string born, string passedAway) {
 
 Person* FamilyTreeManager::_findPerson() {
     string findName;
-    Person *p;
+    Person *p = NULL;
+    string gInput;
     int g;
 
     cout << ">> "; cin >> findName;
     cout << endl;
 
-    cout << "세대 수를 알고 있습니까?(Y: 숫자 입력, N:0 입력) "; cin >> g;
+    cout << "세대 수를 알고 있습니까?(Y: 숫자 입력, N: 'N' 입력) "; cin >> gInput;
     cout << endl;
 
-    if (g == 0) p = t->search(findName);
-    else if (g > 0) p = t->search(g, findName);
-    else { cout << "잘못된 입력입니다." << endl; return NULL; }
+    if (_checkNo(gInput)){
+        p = t->search(findName);
+    }
+    else {
+        g = atoi(gInput.c_str());
+        if (g == 0) { cout << "잘못된 입력입니다." << endl; return NULL; }
+        else if (g > 0) p = t->search(g, findName);
+    }
+
     if (p == NULL) { cout << findName << "이 존재하지 않습니다." << endl; return NULL; }
 
     if (p) {
