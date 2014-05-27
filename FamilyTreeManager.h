@@ -9,6 +9,9 @@ private :
     Person* _findPerson();
     void _printPerson(Person* p);
 
+	bool checkNo(string s){	return s.compare("N")  == 0 || s.compare("n") == 0 ||  s.compare("¤Ì") == 0 ;	}
+	bool checkYes(string s){return s.compare("Y") == 0 || s.compare("y") == 0 || s.compare("¤Ë") == 0 ;	}
+
 public:
 	FamilyTreeManager();
     ~FamilyTreeManager();
